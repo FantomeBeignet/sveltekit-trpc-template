@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import { trpc } from '$lib/trpc/client';
+	import { page } from '$app/stores';
+
+	let greeting = 'Press the button to receive a greeting!';
+
+	const greet = async () => {
+		greeting = await trpc($page).greeting.hello.query();
+	};
+</script>
+
+<button on:click={greet}>Greet me!</button>
+<p>{greeting}</p>
